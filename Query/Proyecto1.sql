@@ -622,7 +622,7 @@ END CRUD;
 
 -- ALTER TABLE Usuario DROP COLUMN id_producto;
 
-
+/*
 SET SERVEROUTPUT ON;
 declare
    result_n INT;
@@ -632,12 +632,31 @@ begin
    result_n := CRUD.actualizar_inventario(2,10,2);
    dbms_output.put_line(result_n);
 end;
+*/
 
-select * from Inventario;
-select * from Producto;
+-------------------------------TRIGGER----------------------------------------
+CREATE OR REPLACE TRIGGER producto_bitacora_trg
+    AFTER 
+    UPDATE OR DELETE 
+    ON Producto
+    FOR EACH ROW    
+DECLARE
+   l_transaction VARCHAR(30);
+   id_agregar INT;
+   
+BEGIN
+   l_transaction := CASE  
+         WHEN UPDATING THEN 'Actualizado'
+         WHEN DELETING THEN 'Borrado'
+   END;
+   SELECT MAX(id)INTO id_agregar FROM Bitacora;
+       
+   INSERT INTO Bitacora VALUES ((id_agregar + 1),current_date,l_transaction,2, :NEW.id);
+END;
 
---ALTER TABLE Usuario DROP COLUMN id_producto;
+--TEST
+SELECT * FROM Bitacora;
 
-select current_date from dual;
-
-
+UPDATE Producto
+SET nombre = 'Tennis', descripcion = 'Grande', precio = 180.0, id_marca = 2, id_talla = 2, id_categoria = 2, id_imagen = 2, id_coleccion = 2
+WHERE id = 2;
