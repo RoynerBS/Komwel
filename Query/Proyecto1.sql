@@ -75,7 +75,7 @@ CREATE TABLE Producto_X_Coleccion
 CREATE TABLE Inventario
 (
     id INT PRIMARY KEY NOT NULL,
-    nombre VARCHAR(20) NOT NULL,
+    cantidad INT NOT NULL,
     id_producto INT NOT NULL,
     CONSTRAINT fk_id_producto FOREIGN KEY (id_producto) REFERENCES Producto(id)
 );
@@ -169,7 +169,19 @@ CREATE OR REPLACE PACKAGE CRUD IS
     --Producto
     FUNCTION agregar_producto(id_ag INT, nombre_ag VARCHAR, descripcion_ag VARCHAR, precio_ag DECIMAL, id_marca_ag INT, id_talla_ag INT, id_categoria_ag INT, id_imagen_ag INT, id_coleccion_ag INT) RETURN INT;
     FUNCTION actualizar_producto(id_act INT, nombre_act VARCHAR, descripcion_act VARCHAR, precio_act DECIMAL, id_marca_act INT, id_talla_act INT, id_categoria_act INT, id_imagen_act INT, id_coleccion_act INT) RETURN INT;
-   
+    
+    --Orden
+    FUNCTION agregar_orden(id_ag INT, fecha_ag DATE, id_usuario_ag INT) RETURN INT;
+    FUNCTION actualizar_orden(id_act INT, fecha_act DATE, id_usuario_act INT) RETURN INT;
+    
+    --Bitacora
+    FUNCTION agregar_bitacora(id_ag INT, fecha_ag DATE, descripcion_ag VARCHAR, id_usuario_ag INT, id_producto_ag INT) RETURN INT;
+    FUNCTION actualizar_bitacora(id_act INT, fecha_act DATE, descripcion_act VARCHAR, id_usuario_act INT, id_producto_act INT) RETURN INT;
+    
+    --Inventario
+    FUNCTION agregar_inventario(id_ag INT, cantidad_ag INT, id_producto_ag INT) RETURN INT;
+    FUNCTION actualizar_inventario(id_act INT, cantidad_act INT, id_producto_act INT) RETURN INT;
+    
 END CRUD;
 
 ------------------BODY----------------------------------
@@ -463,6 +475,147 @@ CREATE OR REPLACE PACKAGE BODY CRUD IS
         END IF;
     END actualizar_producto;
     
+    --Orden
+    FUNCTION agregar_orden(id_ag INT, fecha_ag DATE, id_usuario_ag INT) RETURN INT
+    AS
+        id_nuevo INT;
+        id_usuario INT;
+    BEGIN
+        SELECT cedula INTO id_usuario FROM Usuario WHERE cedula = id_usuario_ag;
+        
+        IF (id_usuario IS NOT NULL) THEN
+            INSERT INTO Orden VALUES (id_ag, fecha_ag, id_usuario_ag);
+        ELSE
+            RETURN 0;
+        END IF;
+        
+        SELECT id INTO id_nuevo FROM Orden WHERE id = id_ag;
+        IF (id_nuevo) IS NOT NULL THEN
+            RETURN 1;
+        ELSE
+            RETURN 0;
+        END IF;
+    END agregar_orden;
+    
+    
+    FUNCTION actualizar_orden(id_act INT, fecha_act DATE, id_usuario_act INT) RETURN INT
+        AS
+        id_nuevo INT;
+        id_usuario_e INT;
+    BEGIN
+        SELECT cedula INTO id_usuario_e FROM Usuario WHERE cedula = id_usuario_act;
+        
+        IF (id_usuario_e IS NOT NULL) THEN
+            UPDATE Orden
+            SET fecha = fecha_act, id_usuario = id_usuario_act
+            WHERE id = id_act;
+        ELSE
+            RETURN 0;
+        END IF;
+        
+        SELECT id INTO id_nuevo FROM Orden WHERE id = id_act;
+        IF (id_nuevo) IS NOT NULL THEN
+            RETURN 1;
+        ELSE
+            RETURN 0;
+        END IF;
+    END actualizar_orden;
+    
+    --Bitacora
+    FUNCTION agregar_bitacora(id_ag INT, fecha_ag DATE, descripcion_ag VARCHAR, id_usuario_ag INT, id_producto_ag INT) RETURN INT
+    AS
+        id_nuevo INT;
+        id_usuario_e INT;
+        id_producto_e INT;
+    BEGIN
+        SELECT cedula INTO id_usuario_e FROM Usuario WHERE cedula = id_usuario_ag;
+        SELECT id INTO id_producto_e FROM Producto WHERE id = id_producto_ag;
+        
+        IF (id_usuario_e IS NOT NULL AND id_producto_e IS NOT NULL) THEN
+            INSERT INTO Bitacora VALUES (id_ag, fecha_ag, descripcion_ag, id_usuario_ag, id_producto_ag);
+        ELSE
+            RETURN 0;
+        END IF;
+        
+        SELECT id INTO id_nuevo FROM Bitacora WHERE id = id_ag;
+        IF (id_nuevo) IS NOT NULL THEN
+            RETURN 1;
+        ELSE
+            RETURN 0;
+        END IF;
+    END agregar_bitacora;
+    
+
+    FUNCTION actualizar_bitacora(id_act INT, fecha_act DATE, descripcion_act VARCHAR, id_usuario_act INT, id_producto_act INT) RETURN INT
+        AS
+        id_nuevo INT;
+        id_usuario_e INT;
+        id_producto_e INT;
+    BEGIN
+        SELECT cedula INTO id_usuario_e FROM Usuario WHERE cedula = id_usuario_act;
+        SELECT id INTO id_producto_e FROM Producto WHERE id = id_producto_act;
+        
+        IF (id_usuario_e IS NOT NULL AND id_producto_e IS NOT NULL) THEN
+            UPDATE Bitacora
+            SET fecha = fecha_act, descripcion = descripcion_act, id_usuario = id_usuario_act, id_producto = id_producto_act
+            WHERE id = id_act;
+        ELSE
+            RETURN 0;
+        END IF;
+        
+        SELECT id INTO id_nuevo FROM Bitacora WHERE id = id_act;
+        IF (id_nuevo) IS NOT NULL THEN
+            RETURN 1;
+        ELSE
+            RETURN 0;
+        END IF;
+    END actualizar_bitacora;
+    
+    --Inventario
+    FUNCTION agregar_inventario(id_ag INT, cantidad_ag INT, id_producto_ag INT) RETURN INT
+    AS
+        id_nuevo INT;
+        id_producto_e INT;
+    BEGIN
+        SELECT id INTO id_producto_e FROM Producto WHERE id = id_producto_ag;
+        
+        IF (id_producto_e IS NOT NULL) THEN
+            INSERT INTO Inventario VALUES (id_ag, cantidad_ag, id_producto_ag);
+        ELSE
+            RETURN 0;
+        END IF;
+        
+        SELECT id INTO id_nuevo FROM Inventario WHERE id = id_ag;
+        IF (id_nuevo) IS NOT NULL THEN
+            RETURN 1;
+        ELSE
+            RETURN 0;
+        END IF;
+    END agregar_inventario;
+    
+    FUNCTION actualizar_inventario(id_act INT, cantidad_act INT, id_producto_act INT) RETURN INT
+    AS
+        id_nuevo INT;
+        id_producto_e INT;
+    BEGIN
+        SELECT id INTO id_producto_e FROM Producto WHERE id = id_producto_act;
+        
+        IF (id_producto_e IS NOT NULL) THEN
+            UPDATE Inventario
+            SET cantidad = cantidad_act, id_producto = id_producto_act
+            WHERE id = id_act;
+        ELSE
+            RETURN 0;
+        END IF;
+        
+        SELECT id INTO id_nuevo FROM Inventario WHERE id = id_act;
+        IF (id_nuevo) IS NOT NULL THEN
+            RETURN 1;
+        ELSE
+            RETURN 0;
+        END IF;
+    END actualizar_inventario;
+    
 END CRUD;
 
 
@@ -476,14 +629,15 @@ declare
 begin
    -- Call the function
    
-   result_n := CRUD.agregar_producto(1,'Camisa','Grande',100.00,1,1,1,1,1);
+   result_n := CRUD.actualizar_inventario(2,10,2);
    dbms_output.put_line(result_n);
 end;
 
+select * from Inventario;
 select * from Producto;
 
 --ALTER TABLE Usuario DROP COLUMN id_producto;
 
-
+select current_date from dual;
 
 
