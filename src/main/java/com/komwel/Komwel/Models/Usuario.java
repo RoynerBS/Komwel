@@ -11,14 +11,14 @@ public class Usuario {
     private boolean isAdmin;
 
 
-    public Usuario(long id, String nombre, String apellido, String email, String contrasena, boolean isAdmin) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.contrasena = contrasena;
-        this.isAdmin = isAdmin;
-    }
+    //public Usuario(String nombre, String apellido, String email, String contrasena) {
+    //    this.nombre = nombre;
+    //    this.apellido = apellido;
+    //    this.email = email;
+    //   this.contrasena = contrasena;
+    //}
+
+
 
     public long getId() {
         return id;

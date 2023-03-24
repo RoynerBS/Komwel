@@ -9,29 +9,55 @@
 </head>
 <body>
 <div class="container"><br>
-  <h1 style="color:red">Student Update Form</h1>
-  <form class="col-5" th:action="@{/saveStudent}" th:object="${student}" method="post">
-
-    <input hidden="hidden" th:field="*{id}" />
+  <h1 style="color:red">Formulario Agregar Producto</h1>
+  <form class="col-5" th:action="@{/admin/guardarProducto}" th:object="${producto}" method="post">
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">StudentName</label>
-      <input type="text" th:field="*{name}" class="form-control">
+      <label for="InputNombre" class="form-label">Nombre del Producto</label>
+      <input type="text" th:field="*{nombre}" class="form-control" id="InputNombre">
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">StudenAddress</label>
-      <input type="text"  th:field="*{address}" class="form-control">
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Email</label>
-      <input type="email" th:field="*{email}" class="form-control">
+      <label for="InputDescripcion" class="form-label">Descripcion del Producto</label>
+      <input type="text"  th:field="*{descripcion}" class="form-control" id="InputDescripcion">
     </div>
 
-    <button type="submit" class="btn btn-success">Update Student</button>
+    <div class="mb-3">
+      <label for="InputPrecio" class="form-label">Precio del Producto</label>
+      <input type="number"  th:field="*{precio}" class="form-control" id="InputPrecio">
+    </div>
+
+    <div class="mb-3">
+      <label for="InputCategoria" class="form-label">Categoria del Producto</label>
+      <select th:field="*{id_categoria}" class="form-select" id="InputCategoria">
+        <option th:each="categoria: ${categorialist}" th:value="${categoria.id}"  th:text="${categoria.nombre}"> </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="InputColeccion" class="form-label">Coleccion del Producto</label>
+      <select th:field="*{id_coleccion}" class="form-select" id="InputColeccion">
+        <option th:each="coleccion: ${coleccionlist}" th:value="${coleccion.id}"  th:text="${coleccion.nombre}"> </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="InputMarca" class="form-label">Marca del Producto</label>
+      <select th:field="*{id_marca}" class="form-select" id="InputMarca">
+        <option th:each="marca: ${marcalist}" th:value="${marca.id}"  th:text="${marca.nombre}"> </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="InputTalla" class="form-label">Talla del Producto</label>
+      <select th:field="*{id_talla}" class="form-select" id="InputTalla">
+        <option th:each="talla: ${tallalist}" th:value="${talla.id}"  th:text="${talla.nombre}"> </option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Registrar Producto</button>
   </form>
 
   <br>
-  <a th:href="@{/}">Go to Homepage</a>
-
+  <a th:href="@{/admin/dashboard}">Go to Dashboard</a>
+  <a th:href="@{/admin/productos}">Go to Productos</a>
 </div>
 
 </body>
