@@ -52,7 +52,7 @@ CREATE TABLE Producto
     id NUMBER PRIMARY KEY NOT NULL,
     nombre VARCHAR(20) NOT NULL,
     descripcion VARCHAR(200) NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
+    precio NUMBER(10,2) NOT NULL,
     id_marca NUMBER NOT NULL,
     id_talla NUMBER NOT NULL,
     id_categoria NUMBER NOT NULL,
