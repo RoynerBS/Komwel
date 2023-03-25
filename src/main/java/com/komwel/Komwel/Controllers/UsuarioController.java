@@ -24,8 +24,14 @@ public class UsuarioController {
 
     @PostMapping("/userLogin")
     public String userLogin(@ModelAttribute("usuario") Usuario usuario) {
-        usuarioRepository.login(usuario);
-        return "redirect:/";
+        int resultado = usuarioRepository.login(usuario);
+        if(resultado == 1){
+            return "redirect:/admin/dashboard";
+        }
+        else{
+            return "redirect:/error";
+        }
+
     }
 
     @GetMapping("/signin")
@@ -38,13 +44,23 @@ public class UsuarioController {
 
     @PostMapping("/userRegister")
     public String userRegister(@ModelAttribute("usuario") Usuario usuario) {
-        usuarioRepository.register(usuario);
-        return "redirect:/login";
+        int resultado = usuarioRepository.verif(usuario);
+        if(resultado == 0){
+            usuarioRepository.register(usuario);
+            return "redirect:/login";
+        }
+        return "redirect:/error";
+
     }
 
     @GetMapping("/carrito")
     public String carrito(){
         return "ordenes";
+    }
+
+    @GetMapping("/error")
+    public String error(){
+        return "error";
     }
 
 }

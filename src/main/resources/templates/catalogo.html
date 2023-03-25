@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Komwel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">KOMWEL</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/catalogo}">Catalogo</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <a class="btn btn-light mx-auto" th:href="@{/login}" >Iniciar Sesion</a>
+                <a class="btn btn-light mx-auto" th:href="@{/signin}" >Registrate</a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" th:each="producto: ${productolist}">
+        <div class="card" >
+            <img th:src="${'images/'+ producto.id + '.jpg'}" class="card-img-top"/>
+            <div class="card-body">
+                <h5 class="card-title" th:text="${producto.nombre}"></h5>
+                <h4 class="card-subtitle" th:text="${producto.precio}"></h4>
+                <p class="card-text" th:text="${producto.descripcion}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 </body>
 </html>

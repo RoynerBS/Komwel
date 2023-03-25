@@ -29,12 +29,14 @@ public class JdbcCategoriaRepository implements CategoriaRepository{
 
     @Override
     public int update(Categoria categoria) {
+
         return jdbcTemplate.update("UPDATE CATEGORIA SET nombre=? WHERE id=?",
                 new Object[] { categoria.getNombre(),categoria.getId() });
     }
 
     @Override
     public int deleteById(Long id) {
+
         return jdbcTemplate.update("DELETE FROM CATEGORIA WHERE id=?", id);
     }
 

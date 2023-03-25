@@ -8,9 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">KOMWEL ADMIN</a>
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">KOMWEL ADMIN</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -68,10 +68,10 @@
             <td th:text="${producto.nombre}"></td>
             <td th:text="${producto.descripcion}"></td>
             <td th:text="${producto.precio}"></td>
-            <td th:text="${producto.id_categoria}"></td>
-            <td th:text="${producto.id_coleccion}"></td>
-            <td th:text="${producto.id_marca}"></td>
-            <td th:text="${producto.id_talla}"></td>
+            <td th:text="${producto.categoria}"></td>
+            <td th:text="${producto.coleccion}"></td>
+            <td th:text="${producto.marca}"></td>
+            <td th:text="${producto.talla}"></td>
             <td>
                 <a th:href="@{/admin/actualizar-producto/{id}(id=${producto.id})}" class="btn btn-primary">Update</a>
                 <a th:href="@{/admin/borrar-producto/{id}(id=${producto.id})}" class="btn btn-danger">Delete</a>

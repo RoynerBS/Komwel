@@ -29,13 +29,41 @@
             <input type="number" th:field="*{precio}" id="inputPrecio" class="form-control">
         </div>
 
+        <div class="mb-3">
+            <label for="InputCategoria" class="form-label">Categoria del Producto</label>
+            <select th:field="*{id_categoria}" class="form-select" id="InputCategoria">
+                <option th:each="categoria: ${categorialist}" th:value="${categoria.id}"  th:text="${categoria.nombre}"> </option>
+            </select>
+        </div>
 
-        <button type="submit" class="btn btn-success">Actualizar Marca</button>
+        <div class="mb-3">
+            <label for="InputColeccion" class="form-label">Coleccion del Producto</label>
+            <select th:field="*{id_coleccion}" class="form-select" id="InputColeccion">
+                <option th:each="coleccion: ${coleccionlist}" th:value="${coleccion.id}"  th:text="${coleccion.nombre}"> </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="InputMarca" class="form-label">Marca del Producto</label>
+            <select th:field="*{id_marca}" class="form-select" id="InputMarca">
+                <option th:each="marca: ${marcalist}" th:value="${marca.id}"  th:text="${marca.nombre}"> </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="InputTalla" class="form-label">Talla del Producto</label>
+            <select th:field="*{id_talla}" class="form-select" id="InputTalla">
+                <option th:each="talla: ${tallalist}" th:value="${talla.id}"  th:text="${talla.nombre}"> </option>
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-success">Actualizar Producto</button>
     </form>
 
     <br>
     <a th:href="@{/admin/dashboard}">Go to Dashboard</a>
-    <a th:href="@{/admin/productos}">Go to Marcas</a>
+    <a th:href="@{/admin/productos}">Go to Productos</a>
 
 </div>
 

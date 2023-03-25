@@ -11,15 +11,6 @@ public class Usuario {
     private boolean isAdmin;
 
 
-    //public Usuario(String nombre, String apellido, String email, String contrasena) {
-    //    this.nombre = nombre;
-    //    this.apellido = apellido;
-    //    this.email = email;
-    //   this.contrasena = contrasena;
-    //}
-
-
-
     public long getId() {
         return id;
     }
@@ -66,18 +57,5 @@ public class Usuario {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", email='" + email + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                ", isAdmin=" + isAdmin +
-                '}';
     }
 }

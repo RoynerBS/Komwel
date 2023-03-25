@@ -10,7 +10,7 @@
 <body>
 <div class="container"><br>
   <h1 style="color:red">Formulario Agregar Producto</h1>
-  <form class="col-5" th:action="@{/admin/guardarProducto}" th:object="${producto}" method="post">
+  <form class="col-5" th:action="@{/admin/guardarProducto}" th:object="${producto}" method="post" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="InputNombre" class="form-label">Nombre del Producto</label>
       <input type="text" th:field="*{nombre}" class="form-control" id="InputNombre">
@@ -52,6 +52,12 @@
         <option th:each="talla: ${tallalist}" th:value="${talla.id}"  th:text="${talla.nombre}"> </option>
       </select>
     </div>
+
+    <div class="mb-3">
+      <label for="InputImage" class="form-label">Imagen del Producto</label>
+      <input type="file" name="file" class="form-control" id="InputImage">
+    </div>
+
     <button type="submit" class="btn btn-success">Registrar Producto</button>
   </form>
 

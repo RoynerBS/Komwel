@@ -9,9 +9,9 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">KOMWEL ADMIN</a>
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">KOMWEL ADMIN</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,6 +43,27 @@
         </div>
     </div>
 </nav>
+
+<div class="container">
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Sentencia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bitacora: ${bitacoralist}">
+            <th th:text="${bitacora.id}" scope="row"></th>
+            <td th:text="${bitacora.usuario}"></td>
+            <td th:text="${bitacora.fecha}"></td>
+            <td th:text="${bitacora.sentencia}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>
